@@ -1,0 +1,30 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo "Installing Docker..."
+      - apt-get update && apt-get install -y docker.io
+      - echo "Installing Docker Compose..."
+      - curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+      - chmod +x /usr/local/bin/docker-compose
+
+  pre_build:
+    commands:
+      - echo "Logging into Amazon ECR..."
+      - $(aws ecr get-login --no-include-email --region ap-south-1)
+      - echo "Building Docker images..."
+      - docker-compose -f docker-compose.yml build
+
+  build:
+    commands:
+      - echo "Pushing Docker images to ECR..."
+      - docker-compose -f docker-compose.yml push
+
+  post_build:
+    commands:
+      - echo "Build and push completed successfully."
+
+artifacts:
+  files:
+    - '**/*'
