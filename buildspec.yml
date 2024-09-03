@@ -1,5 +1,15 @@
 version: 0.2
 
+
+env:
+  variables:
+    POSTGRES_DB: "root"
+    POSTGRES_USER: "root"
+    POSTGRES_PASSWORD: "root"
+    DJANGO_SUPERUSER_USERNAME: "admin"
+    DJANGO_SUPERUSER_PASSWORD: "admin"
+    DJANGO_SUPERUSER_EMAIL: "admin@admin.com"
+
 phases:
   install:
     commands:
