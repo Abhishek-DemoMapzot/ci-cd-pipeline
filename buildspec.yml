@@ -22,7 +22,7 @@ phases:
   pre_build:
     commands:
       - echo "Logging into Amazon ECR..."
-      - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 123456789012.dkr.ecr.ap-south-1.amazonaws.com
+      - aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 390402549525.dkr.ecr.ap-south-1.amazonaws.com
       - echo "Setting up environment variables..."
       - echo "POSTGRES_DB=mydatabase" > .env
       - echo "POSTGRES_USER=myuser" >> .env
@@ -34,8 +34,14 @@ phases:
 
   build:
     commands:
+      - echo "Tagging Docker images..."
+      - docker tag backend:latest 390402549525.dkr.ecr.ap-south-1.amazonaws.com/my-app-repo:backend-latest
+      - docker tag frontend:latest 390402549525.dkr.ecr.ap-south-1.amazonaws.com/my-app-repo:frontend-latest
+      - docker tag nginx:latest 390402549525.dkr.ecr.ap-south-1.amazonaws.com/my-app-repo:nginx-latest
       - echo "Pushing Docker images to ECR..."
-      - docker-compose -f docker-compose.yml push
+      - docker push 390402549525.dkr.ecr.ap-south-1.amazonaws.com/my-app-repo:backend-latest
+      - docker push 390402549525.dkr.ecr.ap-south-1.amazonaws.com/my-app-repo:frontend-latest
+      - docker push 390402549525.dkr.ecr.ap-south-1.amazonaws.com/my-app-repo:nginx-latest
 
   post_build:
     commands:
