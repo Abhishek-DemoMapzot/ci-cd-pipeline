@@ -30,7 +30,9 @@ phases:
       - echo "DJANGO_SECRET_KEY=2e125c+cv*+4u+lyc(its004u440rtp3a)w_=7luyy0+z#3%ub" >> .env
       - echo "DJANGO_DEBUG=True" >> .env
       - echo "Building Docker images..."
-      - docker-compose -f docker-compose.yml build
+      - docker build -t django-react-postgres_backend:latest -f ./apps/docker/backend/Dockerfile .
+      - docker build -t django-react-postgres_frontend:latest -f ./apps/docker/frontend/Dockerfile .
+      - docker build -t django-react-postgres_nginx:latest -f ./apps/docker/nginx/Dockerfile .
 
   build:
     commands:
@@ -38,13 +40,12 @@ phases:
       - docker tag django-react-postgres_backend:latest 390402549525.dkr.ecr.ap-south-1.amazonaws.com/my-app-repo:backend-latest
       - docker tag django-react-postgres_frontend:latest 390402549525.dkr.ecr.ap-south-1.amazonaws.com/my-app-repo:frontend-latest
       - docker tag django-react-postgres_nginx:latest 390402549525.dkr.ecr.ap-south-1.amazonaws.com/my-app-repo:nginx-latest
-      - echo "Pushing Docker images to ECR..."
-      - docker push 390402549525.dkr.ecr.ap-south-1.amazonaws.com/my-app-repo:backend-latest
-      - docker push 390402549525.dkr.ecr.ap-south-1.amazonaws.com/my-app-repo:frontend-latest
-      - docker push 390402549525.dkr.ecr.ap-south-1.amazonaws.com/my-app-repo:nginx-latest
 
   post_build:
     commands:
+      - docker push 390402549525.dkr.ecr.ap-south-1.amazonaws.com/my-app-repo:backend-latest
+      - docker push 390402549525.dkr.ecr.ap-south-1.amazonaws.com/my-app-repo:frontend-latest
+      - docker push 390402549525.dkr.ecr.ap-south-1.amazonaws.com/my-app-repo:nginx-latest
       - echo "Build and push completed successfully."
 
 artifacts:
