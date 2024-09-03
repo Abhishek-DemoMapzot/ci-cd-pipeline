@@ -35,9 +35,9 @@ phases:
   build:
     commands:
       - echo "Tagging Docker images..."
-      - docker tag backend:latest 390402549525.dkr.ecr.ap-south-1.amazonaws.com/my-app-repo:backend-latest
-      - docker tag frontend:latest 390402549525.dkr.ecr.ap-south-1.amazonaws.com/my-app-repo:frontend-latest
-      - docker tag nginx:latest 390402549525.dkr.ecr.ap-south-1.amazonaws.com/my-app-repo:nginx-latest
+      - docker tag django-react-postgres_backend:latest 390402549525.dkr.ecr.ap-south-1.amazonaws.com/my-app-repo:backend-latest
+      - docker tag django-react-postgres_frontend:latest 390402549525.dkr.ecr.ap-south-1.amazonaws.com/my-app-repo:frontend-latest
+      - docker tag django-react-postgres_nginx:latest 390402549525.dkr.ecr.ap-south-1.amazonaws.com/my-app-repo:nginx-latest
       - echo "Pushing Docker images to ECR..."
       - docker push 390402549525.dkr.ecr.ap-south-1.amazonaws.com/my-app-repo:backend-latest
       - docker push 390402549525.dkr.ecr.ap-south-1.amazonaws.com/my-app-repo:frontend-latest
