@@ -93,6 +93,7 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 POSTGRES_USER = config('POSTGRES_USER', cast=str)
 POSTGRES_PASSWORD = config('POSTGRES_PASSWORD', cast=str)
 POSTGRES_DB = config('POSTGRES_DB', cast=str)
+POSTGRES_HOST = config('POSTGRES_HOST', cast=str)
 
 if all([POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB]):
     print("Using PostgreSQL")
@@ -102,7 +103,7 @@ if all([POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB]):
             'NAME': POSTGRES_DB,
             'USER': POSTGRES_USER,
             'PASSWORD': POSTGRES_PASSWORD,
-            'HOST': 'db',
+            'HOST': POSTGRES_HOST,
             'PORT': 5432,
         }
     }
