@@ -11,17 +11,8 @@ services:
     env_file:
       - ./.env
     depends_on:
-      - db
-
-  db:
-    container_name: db
-    image: postgres:15-alpine
-    ports:
-      - "5432:5432"
-    env_file:
-      - ./.env
-    volumes:
-      - db-data:/var/lib/postgresql/data
+      - frontend
+      - nginx
 
   frontend:
     container_name: frontend
@@ -44,12 +35,11 @@ services:
       - "80:80"
     volumes:
       - static:/apps/backend/static
-
     depends_on:
       - backend
       - frontend
 
 volumes:
-  db-data:
   node_modules:
   static:
+
