@@ -155,4 +155,4 @@ include/
 *.njsproj
 *.sln
 *.sw?
-lib64
+lib64.env
